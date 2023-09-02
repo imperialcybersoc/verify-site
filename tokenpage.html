@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html style="width: 100%;">
+
+<head>
+  <title>Verify</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body style=" text-align: center; font-family: sans-serif;">
+  <div id="container" style="text-align: left; display: inline-block; max-width: 900px; width: 100%;">
+    <h3>Please use the following command to complete verification.</h3>
+    <div style="border: 1px solid gray; border-radius: 8px; padding: 10px; ">
+      <code id="tokenbox" style=" word-break: break-all;">{{ .Token }}</code>
+    </div>
+    <button id="copybutton" onclick="copytext()" style="padding: 5px 20px; margin: 10px 0px; ">Copy to clipboard</button>
+    <details>
+      <summary style="cursor: pointer;">Help!</summary>
+      <p>If you are having issues, please reach out to one of the committee members on Discord (qduff, starswap, ...) or via email.</p>
+    </details>
+  </div>
+</body>
+<script>
+  const copytext = async () => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById("tokenbox").innerText);
+      document.getElementById("copybutton").innerHTML = "Copied!"
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  }
+  </script>
+
+</html>
