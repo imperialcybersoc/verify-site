@@ -78,7 +78,7 @@ func verify(w http.ResponseWriter, r *http.Request) {
 
 	tmpl.Execute(w, map[string]interface{}{
 		"Title":   "Please use the following command to complete verification",
-		"Content": encmsg_b64,
+		"Content": "!verify " + encmsg_b64,
 	})
 
 }
