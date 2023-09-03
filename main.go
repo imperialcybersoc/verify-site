@@ -34,16 +34,24 @@ func whoami(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "emailaddress, %s\n", samlsp.AttributeFromContext(r.Context(), "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"))
 }
 
+var tmpl = template.Must(template.ParseFiles("template.html"))
+
 func verify(w http.ResponseWriter, r *http.Request) {
 
 	uid_b64 := r.URL.Query().Get("t")
 	if uid_b64 == "" {
-		fmt.Fprint(w, "Malformed request, please try again.")
+		tmpl.Execute(w, map[string]interface{}{
+			"Title":   "Verification failed.",
+			"Content": "Incomplete request - please visit the link exactly as it has been sent to you.",
+		})
 		return
 	}
 	uid_bytes, err := b64.URLEncoding.DecodeString(uid_b64)
 	if err != nil {
-		fmt.Fprintf(w, "Malformed request, please try again.")
+		tmpl.Execute(w, map[string]interface{}{
+			"Title":   "Verification failed.",
+			"Content": "Malformed request - please visit the link exactly as it has been sent to you.",
+		})
 		return
 	}
 	// if  len(tokenbytes) != 18 { // I was wrong lol
@@ -68,12 +76,9 @@ func verify(w http.ResponseWriter, r *http.Request) {
 	encmsg := aead.Seal(nonce, nonce, msg, nil)
 	encmsg_b64 := b64.StdEncoding.EncodeToString(encmsg)
 
-	tmpl := template.Must(template.ParseFiles("tokenpage.html"))
-	type Params struct {
-		Token string
-	}
-	tmpl.Execute(w, Params{
-		Token: "!verify " + encmsg_b64,
+	tmpl.Execute(w, map[string]interface{}{
+		"Title":   "Please use the following command to complete verification",
+		"Content": encmsg_b64,
 	})
 
 }
