@@ -21,7 +21,7 @@ import (
 )
 
 // really should be pulled from env
-const SITE_URL = "http://localhost:12121"
+const SITE_URL = "https://cybersoc.notavirus.zip/"
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Please use the link the bot sent you to verify your account!")
