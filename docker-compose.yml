@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "12121:80"
+    volumes:
+      - ./key_token:/key_token:ro
+      - ./key_saml.key:/key_saml.key:ro
+      - ./key_saml.crt:/key_saml.crt:ro

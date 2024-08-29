@@ -21,7 +21,7 @@ import (
 )
 
 // really should be pulled from env
-const SITE_URL = "https://cybersoc.notavirus.zip/"
+const SITE_URL = "https://verify.iccybersoc.org/"
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Please use the link the bot sent you to verify your account!")
@@ -150,5 +150,5 @@ func main() {
 	http.Handle("/", http.HandlerFunc(index))
 
 	fmt.Println("Running...")
-	http.ListenAndServe(":12121", nil)
+	http.ListenAndServe(":80", nil)
 }
